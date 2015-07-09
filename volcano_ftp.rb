@@ -1,6 +1,11 @@
 #!/usr/bin/ruby
-require "socket"
+require 'rubygems'
+require 'bundler'
+Bundler.setup(:default)
+require 'socket'
 include Socket::Constants
+
+## Launch script: ruby volcano_ftp.rb 4242
 
 # Volcano FTP contants
 BINARY_MODE = 0
