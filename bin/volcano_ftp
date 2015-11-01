@@ -13,7 +13,7 @@ require 'volcano_ftp'
 
 if ARGV[0]
   begin
-    ftp = VolcanoFtp.new(ARGV[1])
+    ftp = VolcanoFtp::Base.new(ARGV[1])
     ftp.run
   rescue SystemExit, Interrupt
     puts "Caught CTRL+C, exiting"
