@@ -1,21 +1,6 @@
-# Nestor
-A simple Ruby FTP server
+This project is a refactor of [VolcanoFtp](https://github.com/jbouhier/Nestor) made to demonstrate
+idomatic ruby.
 
-### Install
+See [my commits](https://github.com/oelmekki/Nestor/commits/master), in reverse order.
 
-    git clone <repository url>
-    cd Nestor
-    bundle install
-
-### Use
-Just type
-
-    ruby bin/volcano_ftp <port>  
-
-That's it, enjoy your FTP server !
-
-
-## Brought you by
-**Nesrine Ould Braham**  
-**Houssem Akermi**  
-**Jean-Baptiste Bouhier**
+You can click each one to see changed code and rational behind it.
