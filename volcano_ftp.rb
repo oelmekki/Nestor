@@ -46,7 +46,7 @@ class VolcanoFtp
 
   def purge_processes!
     pids.each do |pid|
-      unless Process.waitpid(pid, Process::WNOHANG).nil?
+      if Process.waitpid(pid, Process::WNOHANG)
         ####
         # Do stuff with newly terminated processes here
 
