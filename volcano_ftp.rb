@@ -16,7 +16,7 @@ class VolcanoFtp
   MIN_PORT = 1025
   MAX_PORT = 65534
 
-  attr_reader :socket, :pids, :cs
+  attr_reader :socket, :pids, :commands
 
   def initialize(port)
     # Prepare instance
@@ -25,27 +25,6 @@ class VolcanoFtp
 
     @pids = []
     puts "Server ready to listen for clients on port #{port}"
-  end
-
-  def ftp_syst(args)
-    cs.write "215 UNIX Type: L8\r\n"
-    0
-  end
-
-  def ftp_noop(args)
-    cs.write "200 Don't worry my lovely client, I'm here ;)"
-    0
-  end
-
-  def ftp_502(*args)
-    puts "Command not found"
-    cs.write "502 Command not implemented\r\n"
-    0
-  end
-
-  def ftp_exit(args)
-    cs.write "221 Thank you for using Volcano FTP\r\n"
-    -1
   end
 
   def run
@@ -63,7 +42,8 @@ class VolcanoFtp
         end
         p pids
       else
-        @cs, _ = socket.accept
+        cs, _ = socket.accept
+        @commands = FtpCommands.new cs
         pids << Kernel.fork do
           puts "[#{Process.pid}] Instanciating connection from #{cs.peeraddr[2]}:#{cs.peeraddr[1]}"
           cs.write "220-\r\n\r\n Welcome to Volcano FTP server !\r\n\r\n220 Connected\r\n"
@@ -78,6 +58,35 @@ class VolcanoFtp
           Kernel.exit!
         end
       end
+    end
+  end
+
+  class FtpCommands
+    attr_reader :cs
+
+    def initialize( cs )
+      @cs = cs
+    end
+
+    def syst(args)
+      cs.write "215 UNIX Type: L8\r\n"
+      0
+    end
+
+    def noop(args)
+      cs.write "200 Don't worry my lovely client, I'm here ;)"
+      0
+    end
+
+    def error_502(*args)
+      puts "Command not found"
+      cs.write "502 Command not implemented\r\n"
+      0
+    end
+
+    def exit(args)
+      cs.write "221 Thank you for using Volcano FTP\r\n"
+      -1
     end
   end
 
