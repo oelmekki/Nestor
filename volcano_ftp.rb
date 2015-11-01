@@ -31,33 +31,43 @@ class VolcanoFtp
     while (42)
       selectResult = IO.select([socket], nil, nil, 0.1)
       if selectResult == nil or selectResult[0].include?(socket) == false
-        pids.each do |pid|
-          if not Process.waitpid(pid, Process::WNOHANG).nil?
-            ####
-            # Do stuff with newly terminated processes here
-
-            ####
-            pids.delete(pid)
-          end
-        end
-        p pids
+        purge_processes!
       else
-        cs, _ = socket.accept
-        @commands = FtpCommands.new cs
-        pids << Kernel.fork do
-          puts "[#{Process.pid}] Instanciating connection from #{cs.peeraddr[2]}:#{cs.peeraddr[1]}"
-          cs.write "220-\r\n\r\n Welcome to Volcano FTP server !\r\n\r\n220 Connected\r\n"
-          while not (line = cs.gets).nil?
-            puts "[#{Process.pid}] Client sent : --#{line}--"
-            ####
-            # Handle commands here
-            ####
-          end
-          puts "[#{Process.pid}] Killing connection from #{peeraddr[2]}:#{peeraddr[1]}"
-          cs.close
-          Kernel.exit!
-        end
+        accept_connection!
       end
+    end
+  end
+
+  private
+
+  def purge_processes!
+    pids.each do |pid|
+      if not Process.waitpid(pid, Process::WNOHANG).nil?
+        ####
+        # Do stuff with newly terminated processes here
+
+        ####
+        pids.delete(pid)
+      end
+    end
+    p pids
+  end
+
+  def accept_connection!
+    cs, _ = socket.accept
+    @commands = FtpCommands.new cs
+    pids << Kernel.fork do
+      puts "[#{Process.pid}] Instanciating connection from #{cs.peeraddr[2]}:#{cs.peeraddr[1]}"
+      cs.write "220-\r\n\r\n Welcome to Volcano FTP server !\r\n\r\n220 Connected\r\n"
+      while not (line = cs.gets).nil?
+        puts "[#{Process.pid}] Client sent : --#{line}--"
+        ####
+        # Handle commands here
+        ####
+      end
+      puts "[#{Process.pid}] Killing connection from #{peeraddr[2]}:#{peeraddr[1]}"
+      cs.close
+      Kernel.exit!
     end
   end
 
@@ -89,11 +99,6 @@ class VolcanoFtp
       -1
     end
   end
-
-private
-
-  # Protected methods go here
-
 end
 
 # Main
