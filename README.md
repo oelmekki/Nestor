@@ -13,7 +13,7 @@ A simple Ruby FTP server
 ### Use
 Just type
 
-    ruby volcano_ftp.rb <port>  
+    ruby bin/volcano_ftp <port>  
 
 That's it, enjoy your FTP server !
 

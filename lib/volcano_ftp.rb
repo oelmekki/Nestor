@@ -1,10 +1,4 @@
-#!/usr/bin/ruby
-require 'rubygems'
-require 'bundler'
-Bundler.setup(:default)
 require 'socket'
-
-## Launch script: ruby volcano_ftp.rb 4242
 
 
 # Volcano FTP class
@@ -102,18 +96,5 @@ class VolcanoFtp
       cs.write "221 Thank you for using Volcano FTP\r\n"
       -1
     end
-  end
-end
-
-# Main
-
-if ARGV[0]
-  begin
-    ftp = VolcanoFtp.new(ARGV[1])
-    ftp.run
-  rescue SystemExit, Interrupt
-    puts "Caught CTRL+C, exiting"
-  rescue RuntimeError => e
-    puts e
   end
 end
