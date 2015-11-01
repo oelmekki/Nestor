@@ -29,8 +29,8 @@ class VolcanoFtp
 
   def run
     while (42)
-      selectResult = IO.select([socket], nil, nil, 0.1)
-      if got_selection?( selectResult )
+      select_result = IO.select([socket], nil, nil, 0.1)
+      if got_selection? select_result
         accept_connection!
       else
         purge_processes!
