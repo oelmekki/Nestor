@@ -3,13 +3,13 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup(:default)
 require 'socket'
-include Socket::Constants
 
 ## Launch script: ruby volcano_ftp.rb 4242
 
 
 # Volcano FTP class
 class VolcanoFtp
+  include Socket::Constants
   # Volcano FTP contants
   BINARY_MODE = 0
   ASCII_MODE = 1
