@@ -7,14 +7,15 @@ include Socket::Constants
 
 ## Launch script: ruby volcano_ftp.rb 4242
 
-# Volcano FTP contants
-BINARY_MODE = 0
-ASCII_MODE = 1
-MIN_PORT = 1025
-MAX_PORT = 65534
 
 # Volcano FTP class
 class VolcanoFtp
+  # Volcano FTP contants
+  BINARY_MODE = 0
+  ASCII_MODE = 1
+  MIN_PORT = 1025
+  MAX_PORT = 65534
+
   attr_reader :socket, :pids, :cs
 
   def initialize(port)
