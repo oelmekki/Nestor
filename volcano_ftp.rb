@@ -62,7 +62,7 @@ class VolcanoFtp
         end
         p pids
       else
-        @cs,  = socket.accept
+        @cs, _ = socket.accept
         pids << Kernel.fork do
           puts "[#{Process.pid}] Instanciating connection from #{cs.peeraddr[2]}:#{cs.peeraddr[1]}"
           cs.write "220-\r\n\r\n Welcome to Volcano FTP server !\r\n\r\n220 Connected\r\n"
