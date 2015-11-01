@@ -2,13 +2,10 @@
 A simple Ruby FTP server
 
 ### Install
-    - install rvm
-    - rvm get head
-    - rvm use 2.2.2
-    - gem install bundler
-    - git clone this repository
-    - cd into the project's directory
-    - bundle install (to install depedencies)
+
+    git clone <repository url>
+    cd Nestor
+    bundle install
 
 ### Use
 Just type
