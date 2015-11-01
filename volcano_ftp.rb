@@ -42,7 +42,7 @@ class VolcanoFtp
 
   def purge_processes!
     pids.each do |pid|
-      if not Process.waitpid(pid, Process::WNOHANG).nil?
+      unless Process.waitpid(pid, Process::WNOHANG).nil?
         ####
         # Do stuff with newly terminated processes here
 
@@ -59,7 +59,7 @@ class VolcanoFtp
     pids << Kernel.fork do
       puts "[#{Process.pid}] Instanciating connection from #{cs.peeraddr[2]}:#{cs.peeraddr[1]}"
       cs.write "220-\r\n\r\n Welcome to Volcano FTP server !\r\n\r\n220 Connected\r\n"
-      while not (line = cs.gets).nil?
+      until (line = cs.gets).nil?
         puts "[#{Process.pid}] Client sent : --#{line}--"
         ####
         # Handle commands here
