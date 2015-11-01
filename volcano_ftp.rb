@@ -81,7 +81,7 @@ class VolcanoFtp
     end
   end
 
-protected
+private
 
   # Protected methods go here
 
