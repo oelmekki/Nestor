@@ -30,15 +30,19 @@ class VolcanoFtp
   def run
     while (42)
       selectResult = IO.select([socket], nil, nil, 0.1)
-      if selectResult == nil or selectResult[0].include?(socket) == false
-        purge_processes!
-      else
+      if got_selection?( selectResult )
         accept_connection!
+      else
+        purge_processes!
       end
     end
   end
 
   private
+
+  def got_selection?( select )
+    select and select[0].include?(socket)
+  end
 
   def purge_processes!
     pids.each do |pid|
